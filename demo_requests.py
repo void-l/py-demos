@@ -36,7 +36,11 @@ def get_baidu_translation_collection():
 
 
 if __name__ == '__main__':
-    collection = get_baidu_translation_collection()
-    print len(collection['pageinfo'])
-    # for word in collection['pageinfo']:
-    # print word['fanyisrc'], word['dict']
+    collection = get_baidu_translation_collection()['pageinfo']
+    print len(collection)
+
+    for word in collection:
+        print word['id']
+        print word['fanyisrc']
+        print word['dict']
+        print word['updatetime']
