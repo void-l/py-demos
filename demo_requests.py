@@ -1,18 +1,19 @@
 # -*- coding:utf-8 -*-
 import requests
-import utils, cfg
+import utils
+import cfg
 
 
 def get_baidu_translation_collection():
     header_origin = cfg.BAIDU_TRANSLATION_HEADERS
     headers = utils.trans_header_to_dict(header_origin)
 
-    r = requests.get("http://fanyi.baidu.com/collection", headers=headers)
-    print 'url', r.url
-    print 'headers', r.headers
+    # r = requests.get("http://fanyi.baidu.com/collection", headers=headers)
+    # print 'url', r.url
+    # print 'headers', r.headers
     # print 'text', r.text
     # print 'content', r.content
-    print 'encoding', r.encoding
+    # print 'encoding', r.encoding
 
     url = 'http://fanyi.baidu.com/pcnewcollection?req=get'
     data = {
@@ -20,13 +21,22 @@ def get_baidu_translation_collection():
         'order': 'time',
         'direction': 'all',
         'page': '0',
-        'pagesize': '146'
+        'pagesize': '30'
     }
+    rs = requests.post(url, data=data, headers=headers)
+    json_data = rs.json()
+    # get total
+    total = json_data['total']
+    data['pagesize'] = total
 
     rs = requests.post(url, data=data, headers=headers)
-    json_data = rs.json()  #dict
+    json_data = rs.json()
+
     return json_data
+
 
 if __name__ == '__main__':
     collection = get_baidu_translation_collection()
-    print collection['total']
+    print len(collection['pageinfo'])
+    # for word in collection['pageinfo']:
+    # print word['fanyisrc'], word['dict']

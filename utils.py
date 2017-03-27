@@ -8,8 +8,10 @@ def trans_header_to_dict(headers):
     :return dict_headers
     """
     headers = headers.split('\n')
-    headers = [item.strip(' ') for item in headers]
-    headers = [item.strip(' ') for item in headers if len(item) > 0]
+    # headers = [item.strip(' ') for item in headers]
+    headers = map(lambda x: x.strip(' '), headers)
+    # headers = [item.strip(' ') for item in headers if len(item) > 0]
+    headers = filter(lambda x: len(x) > 0, headers)
 
     dict_headers = {}
     for item in headers:
