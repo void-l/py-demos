@@ -2,6 +2,7 @@
 import requests
 import utils
 import cfg
+import lchelper
 
 
 def get_baidu_translation_collection():
@@ -40,7 +41,5 @@ if __name__ == '__main__':
     print len(collection)
 
     for word in collection:
-        print word['id']
-        print word['fanyisrc']
-        print word['dict']
-        print word['updatetime']
+        id_ = word['id']
+        lchelper.save_translation(id_=id_, values=word)
